@@ -1,0 +1,97 @@
+C51 COMPILER V9.54   TST                                                                   11/23/2023 16:52:15 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE TST
+OBJECT MODULE PLACED IN .\Objects\tst.obj
+COMPILER INVOKED BY: D:\Èí¼þ°²×°\keil5\C51\BIN\C51.EXE test\tst.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Li
+                    -stings\tst.lst) TABS(2) OBJECT(.\Objects\tst.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          sbit du=P2^6;
+   5          sbit we=P2^7;
+   6          uchar Key = 19;
+   7          uchar code dula[]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F,0x77,0x7C,0x39,0x5E,0x79,0x71,0x76,0x
+             -38,0x40,0x00}
+   8          void delay(uint z)
+*** ERROR C141 IN LINE 8 OF test\tst.c: syntax error near 'void'
+   9          {
+*** ERROR C141 IN LINE 9 OF test\tst.c: syntax error near '{'
+  10            uint x,y;
+  11            for(x = z; x > 0; x--)
+*** ERROR C141 IN LINE 11 OF test\tst.c: syntax error near 'for'
+*** ERROR C141 IN LINE 11 OF test\tst.c: syntax error near '=', expected ')'
+*** ERROR C129 IN LINE 11 OF test\tst.c: missing ';' before '>'
+  12              for(y = 114; y > 0 ; y--);    
+  13          } 
+  14          void KeyValue()
+  15          {
+  16                  P3 = 0x0f;
+  17                  if(P3!=0x0f)
+  18                  {
+  19                      delay(10);
+  20                      if(P3!=0x0f)
+  21                      {
+  22                          switch(P3)
+  23                          {
+  24                              case 0x0e;Key = 0;break;
+  25                              case 0x0d;Key = 1;break;
+  26                              case 0x0b;Key = 2;break;
+  27                              case 0x07;Key = 3;break;
+  28          
+  29                          }
+  30                          while(P3!= 0x0f );
+  31                          P3 = 0xf0;
+  32                          switch(P3)
+  33                          {
+  34                              case 0xe0;Key =Key;break;
+  35                              case 0xd0;Key = Key+4;break;
+  36                              case 0xb0;Key = Key+8;break;
+  37                              case 0x70;Key = Key+12;break;
+  38          
+  39          
+  40                          }
+  41                          while(P3!=0x0f)
+  42                      }
+  43                  }
+  44                  P3 = 0xff;
+  45                  if(P3!=0xff)
+  46                  {
+  47          
+  48                      delay(10);
+C51 COMPILER V9.54   TST                                                                   11/23/2023 16:52:15 PAGE 2   
+
+  49                      if(P3!=0xff)
+  50                      {
+  51                          switch(P3)
+  52                          {
+  53                              case 0xef;Key = 16;break;
+  54                              case 0xdf;Key = 17;break;
+  55                              case 0xbf;Key = 18;break;
+  56                              case 0x7f;Key = 19;break;
+  57                          }
+  58                      }
+  59                  }
+  60          }
+  61          
+  62          
+  63          void main()
+  64          {
+  65              we = 1;
+  66              P0 = 0xfe;
+  67              we = 0;
+  68              
+  69              du = 1;
+  70              while(1)
+  71              {
+  72                  KeyVale();
+  73                  P0 = dula[Key];
+  74          
+  75              }
+  76              du = 0;
+  77          }
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  5 ERROR(S)

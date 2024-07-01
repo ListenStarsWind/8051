@@ -1,0 +1,3 @@
+".\Objects\电子2323刘家乐.obj" 
+TO ".\Objects\电子2323刘家乐" 
+PRINT(".\Listings\电子2323刘家乐.m51") RAMSIZE(256) 

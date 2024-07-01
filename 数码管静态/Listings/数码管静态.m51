@@ -1,0 +1,120 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    02/26/2024  20:12:50  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+E:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\1-数码管静态.obj TO .\Objects\数码管静态 PRINT (.\Listings\数码管静态.m51) RAMSIZE
+>>  (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\1-数码管静态.obj (1___________)
+  E:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\数码管静态 (1___________)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0050H     UNIT         ?PR?MAIN?1___________
+            CODE    0053H     001EH     UNIT         ?PR?_DELAY?1___________
+            CODE    0071H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\数码管静态 (1___________)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?1___________
+
+?PR?MAIN?1___________
+  +--> ?PR?_DELAY?1___________
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\数码管静态 (1___________)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        1___________
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:0053H         PUBLIC        _delay
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  02/26/2024  20:12:50  PAGE 2
+
+
+  D:00B8H         PUBLIC        IP
+  C:0003H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:00A0H.6       PUBLIC        du
+  B:00A0H.7       PUBLIC        we
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        z
+  -------         DO            
+  D:0006H         SYMBOL        x
+  D:0004H         SYMBOL        y
+  -------         ENDDO         
+  C:0053H         LINE#         6
+  C:0053H         LINE#         7
+  C:0053H         LINE#         9
+  C:005CH         LINE#         10
+  C:0070H         LINE#         11
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  C:0003H         LINE#         12
+  C:0003H         LINE#         13
+  C:0003H         LINE#         16
+  C:0006H         LINE#         17
+  C:0008H         LINE#         18
+  C:000BH         LINE#         19
+  C:000DH         LINE#         20
+  C:0014H         LINE#         21
+  C:0017H         LINE#         22
+  C:0019H         LINE#         23
+  C:001CH         LINE#         24
+  C:001EH         LINE#         26
+  C:0021H         LINE#         27
+  C:0023H         LINE#         28
+  C:0026H         LINE#         29
+  C:0028H         LINE#         30
+  C:002EH         LINE#         31
+  C:0031H         LINE#         32
+  C:0033H         LINE#         33
+  C:0036H         LINE#         34
+  C:0038H         LINE#         36
+  C:003BH         LINE#         37
+  C:003DH         LINE#         38
+  C:0040H         LINE#         39
+  C:0042H         LINE#         40
+  C:0048H         LINE#         41
+  C:004BH         LINE#         42
+  C:004DH         LINE#         43
+  C:0050H         LINE#         44
+  C:0052H         LINE#         46
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        1___________
+
+Program Size: data=9.0 xdata=0 code=125
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

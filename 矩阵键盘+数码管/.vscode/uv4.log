@@ -1,0 +1,8 @@
+Build target 'Target 1'
+compiling main.c...
+main.c(14): error C100: unprintable character 0xE3 skipped
+main.c(14): error C100: unprintable character 0x80 skipped
+main.c(14): error C100: unprintable character 0x82 skipped
+main.c(14): error C202: 'y0': undefined identifier
+main.c(15): error C141: syntax error near '}'
+Target not created.

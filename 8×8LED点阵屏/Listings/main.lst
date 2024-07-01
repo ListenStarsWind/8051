@@ -1,0 +1,66 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              11/29/2023 19:21:37 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          sbit DIO = P3^4;
+   3          sbit S_CLK = P3^5;
+   4          sbit O_CLK = P3^6;
+   5          void main()
+   6          {
+   7   1          unsigned char i,dat,j;
+   8   1          dat = 0xfe;
+   9   1          for(i=0;i<8;i++)
+  10   1          {
+  11   2              S_CLK = 0;
+  12   2              O_CLK = 0;
+  13   2              if(dat & 0x01)
+  14   2              {
+  15   3                  DIO = 1;
+  16   3              }
+  17   2              else
+  18   2              {
+  19   3                  DIO = 0;
+  20   3              }
+  21   2              S_CLK = 1;
+  22   2              dat >>= 1; 
+  23   2          }
+  24   1          dat = 0x80;
+  25   1          for(j=8;j>0;j--)
+  26   1          {
+  27   2              S_CLK = 0;
+  28   2              O_CLK = 0;
+  29   2              if(dat & 0x01)
+  30   2              {
+  31   3                  DIO = 1 ;
+  32   3              }
+  33   2              else
+  34   2              {
+  35   3                  DIO = 0;
+  36   3              }
+  37   2              S_CLK = 1;
+  38   2              dat >>= 1; 
+  39   2          }
+  40   1          O_CLK = 1;
+  41   1          while(1);
+  42   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     58    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

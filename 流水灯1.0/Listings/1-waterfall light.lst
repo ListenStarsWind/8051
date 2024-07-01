@@ -1,0 +1,64 @@
+C51 COMPILER V9.54   1_WATERFALL_LIGHT                                                     10/29/2023 19:28:51 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE 1_WATERFALL_LIGHT
+OBJECT MODULE PLACED IN .\Objects\1-waterfall light.obj
+COMPILER INVOKED BY: D:\Èí¼þ°²×°\keil5\C51\BIN\C51.EXE 1-waterfall light.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND P
+                    -RINT(.\Listings\1-waterfall light.lst) TABS(2) OBJECT(.\Objects\1-waterfall light.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2                
+   3                sbit LED1 = P1^0;
+   4                sbit LED2 = P1^1;
+   5                sbit LED3 = P1^2;
+   6                sbit LED4 = P1^3;
+   7                sbit LED5 = P1^4;
+   8                sbit LED6 = P1^5;
+   9                sbit LED7 = P1^6;
+  10                sbit LED8 = P1^7;
+  11          
+  12             unsigned int i;
+  13          
+  14          void main()
+  15          {
+  16   1                    LED1 = 0;
+  17   1                    i = 64535;
+  18   1                    while(i--);
+  19   1                    LED2 = 0;
+  20   1                    i = 64535;
+  21   1                    while(i--);
+  22   1                    LED3 = 0;
+  23   1                    i = 64535;
+  24   1                    while(i--);
+  25   1                    LED4 = 0;
+  26   1                    i = 64535;
+  27   1                    while(i--);
+  28   1                    LED5 = 0;
+  29   1                    i = 64535;
+  30   1                    while(i--);
+  31   1                    LED6 = 0;
+  32   1                    i = 64535;
+  33   1                    while(i--);
+  34   1                    LED7 = 0;
+  35   1                    i = 64535;
+  36   1                    while(i--);
+  37   1                    LED8 = 0;
+  38   1                    i = 64535;
+  39   1                    while(i--);
+  40   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    169    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

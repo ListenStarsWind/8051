@@ -1,0 +1,3 @@
+".\Objects\main.obj" 
+TO ".\Objects\任务2" 
+PRINT(".\Listings\任务2.m51") RAMSIZE(256) 

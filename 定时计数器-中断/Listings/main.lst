@@ -1,0 +1,263 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              12/24/2023 19:21:48 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /*********************************************************************************
+   2           * 【作    者】：  听风若依
+   3           * 【版    本】：  V1.0
+   4           * 【实验平台】：  清翔 QX-MCS51 单片机开发板
+   5           * 【外部晶振】：  11.0592mhz
+   6           * 【主控芯片】：  STC89C52
+   7           * 【编译环境】：  Keil μVisio5
+   8           * 【编辑环境】：  VS code
+   9           * 【程序功能】：  定时器0工作模式1，16位定时模式，由定时器0引发中断，执行
+             -中断程序。
+  10           * 【使用说明】：  按下S6数码管显示数字加一，按下S10数码管显示数字减一,按�
+             -�S2数字清零。
+  11           **********************************************************************************/
+  12          #include <reg52.h>
+  13          #define uint unsigned int
+  14          #define uchar unsigned char
+  15          #define ulong unsigned long
+  16          sbit DU = P2 ^ 6;
+  17          sbit WE = P2 ^ 7;
+  18          ulong number = 31415926;
+  19          uint flag = 20;
+  20          uchar code DUnumber[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F}; // 共阴极数码�
+             -�段选表
+  21          uchar code WEnumber[] = {0xfe, 0xfd, 0xfb, 0xf7, 0xef, 0xdf, 0xbf, 0x7f};             // 八位数码管�
+             -�选表（低电位表示选中该数码管)
+  22          
+  23          /*====================================
+  24          函数  ： delay(uint z)
+  25          参数  ：z 延时毫秒设定，取值范围0-65535
+  26          返回值 ：无
+  27          描述  ：12T/Fosc11.0592M毫秒级延时
+  28          ====================================*/
+  29          void delay(uint z)
+  30          {
+  31   1          uint x, y;
+  32   1          for (x = z; x > 0; x--)
+  33   1              for (y = 114; y > 0; y--)
+  34   1                  ;
+  35   1      }
+  36          
+  37          /*===========================================
+  38          函数  ： disply(uint i)
+  39          参数    ： i 设定显示数字，取值范围0-99999999
+  40          描述  ： 八位共阴极数码管显示函数。
+  41          ===========================================*/
+  42          void disply(ulong i)
+  43          {
+  44   1      
+  45   1          static uchar location;
+  46   1          P0 = 0xFF;
+  47   1          WE = 1;
+  48   1          P0 = WEnumber[location];
+  49   1          WE = 0;
+  50   1          switch (location)
+C51 COMPILER V9.60.7.0   MAIN                                                              12/24/2023 19:21:48 PAGE 2   
+
+  51   1          {
+  52   2          case 0:
+  53   2              DU = 1;
+  54   2              P0 = DUnumber[number / 10000000];
+  55   2              DU = 0;
+  56   2              break;
+  57   2          case 1:
+  58   2              DU = 1;
+  59   2              P0 = DUnumber[number % 10000000 / 1000000];
+  60   2              DU = 0;
+  61   2              break;
+  62   2          case 2:
+  63   2              DU = 1;
+  64   2              P0 = DUnumber[number % 1000000 / 100000];
+  65   2              DU = 0;
+  66   2              break;
+  67   2          case 3:
+  68   2              DU = 1;
+  69   2              P0 = DUnumber[number % 100000 / 10000];
+  70   2              DU = 0;
+  71   2              break;
+  72   2          case 4:
+  73   2              DU = 1;
+  74   2              P0 = DUnumber[number % 10000 / 1000];
+  75   2              DU = 0;
+  76   2              break;
+  77   2          case 5:
+  78   2              DU = 1;
+  79   2              P0 = DUnumber[number % 1000 / 100];
+  80   2              DU = 0;
+  81   2              break;
+  82   2          case 6:
+  83   2              DU = 1;
+  84   2              P0 = DUnumber[number % 100 / 10];
+  85   2              DU = 0;
+  86   2              break;
+  87   2          case 7:
+  88   2              DU = 1;
+  89   2              P0 = DUnumber[number % 10];
+  90   2              DU = 0;
+  91   2              break;
+  92   2          }
+  93   1          location++;
+  94   1          if (8 == location)
+  95   1              location = 0;
+  96   1      }
+*** WARNING C280 IN LINE 42 OF main.c: 'i': unreferenced local variable
+  97          
+  98          /*====================================
+  99          函数  ： Initializer()
+ 100          参数  ：无
+ 101          返回值 ：无
+ 102          描述  ：初始化中断系统，定时器0。
+ 103          ====================================*/
+ 104          void Initializer()
+ 105          {
+ 106   1          EA = 1;
+ 107   1          ET0 = 1;
+ 108   1          TR0 = 1;
+ 109   1          TMOD = 0X01;
+ 110   1          // 一轮机器周期耗时1.085us,12轮时钟周期为一轮机器周期。
+ 111   1          TL0 = 0XFE;
+C51 COMPILER V9.60.7.0   MAIN                                                              12/24/2023 19:21:48 PAGE 3   
+
+ 112   1          TH0 = 0XC9; // 定时15ms。
+ 113   1      }
+ 114          
+ 115          void main()
+ 116          {
+ 117   1      
+ 118   1          Initializer();
+ 119   1          while (1)
+ 120   1          {
+ 121   2              // 矩阵键盘扫描。
+ 122   2              P3 = 0XF0;
+ 123   2              if (P3 != 0XF0)
+ 124   2              {
+ 125   3                  delay(20);
+ 126   3                  if (P3 != 0XF0)
+ 127   3                  {
+ 128   4                      switch (P3)
+ 129   4                      {
+ 130   5                      case 0xE0:
+ 131   5                          flag = 0; //
+ 132   5                          break;
+ 133   5                      case 0xD0:
+ 134   5                          flag = 1;
+ 135   5                          break;
+ 136   5                      case 0xB0:
+ 137   5                          flag = 2;
+ 138   5                          break;
+ 139   5                      case 0x70:
+ 140   5                          flag = 3;
+ 141   5                          break;
+ 142   5                      }
+ 143   4                      P3 = 0X0F;
+ 144   4                      switch (P3)
+ 145   4                      {
+ 146   5                      case 0x0E:
+ 147   5                          flag = flag;
+ 148   5                          break;
+ 149   5                      case 0x0D:
+ 150   5                          flag = flag + 4;
+ 151   5                          break;
+ 152   5                      case 0x0B:
+ 153   5                          flag = flag + 8;
+ 154   5                          break;
+ 155   5                      case 0x07:
+ 156   5                          flag = flag + 12;
+ 157   5                          break;
+ 158   5                      }
+ 159   4                      while (P3 != 0X0F)
+ 160   4                          ;
+ 161   4                  }
+ 162   3              }
+ 163   2              // 独立键盘扫描
+ 164   2              P3 = 0XFF;
+ 165   2              if (P3 != 0XFF)
+ 166   2              {
+ 167   3                  delay(5);
+ 168   3                  if (P3 != 0XFF)
+ 169   3                      switch (P3)
+ 170   3                      {
+ 171   4                      case 0xFE: 
+ 172   4                      flag = 16;
+ 173   4                          break;
+C51 COMPILER V9.60.7.0   MAIN                                                              12/24/2023 19:21:48 PAGE 4   
+
+ 174   4                          case 0xFD:
+ 175   4                          flag = 17;
+ 176   4                          break;
+ 177   4                      case 0xFB:
+ 178   4                          flag = 18;
+ 179   4                          break;
+ 180   4                      case 0xF7:
+ 181   4                          flag = 19;
+ 182   4                          break;
+ 183   4                      }
+ 184   3                  while (P3 != 0XFF)
+ 185   3                      ;
+ 186   3              }
+ 187   2              // 变量调整
+ 188   2              switch (flag)
+ 189   2              {
+ 190   3              case 0:
+ 191   3                  flag = 20;
+ 192   3                  if (99999999 != number)
+ 193   3                      number++;
+ 194   3                  break;
+ 195   3              case 4:
+ 196   3                  flag = 20;
+ 197   3                  if (0 != number)
+ 198   3                      number--;
+ 199   3                      break;
+ 200   3              case 16:
+ 201   3          flag = 20;
+ 202   3              number = 0;
+ 203   3          break;
+ 204   3          case 19:
+ 205   3              flag = 20;
+ 206   3            number = 31415926;
+ 207   3                  break;
+ 208   3          default:
+ 209   3              break;
+ 210   3          }
+ 211   2          }
+ 212   1      }
+ 213          
+ 214          /*====================================
+ 215          函数  ： timer0()
+ 216          参数  ：无
+ 217          返回值 ：无
+ 218          描述  ：定时器0溢出引发中断，执行中断程序。
+ 219          ====================================*/
+ 220          void timer0() interrupt 1
+ 221          {
+ 222   1          TL0 = 0XFE;
+ 223   1          TH0 = 0XC9; 
+ 224   1          disply(number);
+ 225   1         
+ 226   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    858    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      7       4
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.7.0   MAIN                                                              12/24/2023 19:21:48 PAGE 5   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

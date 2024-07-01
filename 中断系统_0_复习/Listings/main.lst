@@ -1,0 +1,234 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              03/23/2024 19:53:20 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /*********************************************************************************
+   2           * 【作    者】：  听风若依
+   3           * 【版    本】：  V1.0
+   4           * 【实验平台】：  清翔 QX-MCS51 单片机开发板
+   5           * 【外部晶振】：  11.0592mhz
+   6           * 【主控芯片】：  STC89C52
+   7           * 【编译环境】：  Keil μVisio5
+   8           * 【编辑环境】：  VS code
+   9           * 【程序功能】：  定时器0工作模式1，16位定时模式，由定时器0引发中断，执行
+             -中断程序。
+  10          **********************************************************************************/
+  11           
+  12          #include <reg52.h>
+  13          #include <intrins.h>
+  14          
+  15          #define uchar unsigned char
+  16          #define uint unsigned int
+  17          #define ulong unsigned long
+  18          
+  19          sbit DU = P2 ^ 6;
+  20          sbit WE = P2 ^ 7;
+  21          sbit serial_input = P3 ^ 4 ;    // 数据串行输入口
+  22          sbit SCLK = P3 ^ 5  ;           // 串行输入上升沿触发口
+  23          sbit PCLK = P3 ^ 6;             // 并行输出上升沿触发口
+  24          
+  25             int p =0;//LatticeScreen()
+  26          
+  27          uchar code arr[][8] =   {   0xE0,0xEF,0x01,0x6D,0x01,0x6D,0x01,0xEF,
+  28                                      0xE7,0xF7,0xF7,0xF7,0x80,0xF7,0xFB,0xC3,
+  29                                      0xFF,0x83,0xBF,0xBF,0x83,0xFB,0xFB,0x83,
+  30                                      0x83,0xFB,0xFB,0x83,0xFB,0xFB,0x83,0xFF,
+  31                                  };
+  32          
+  33          
+  34          ulong code dula[10] = {
+  35            0x3F,
+  36            0x06,
+  37            0x5B,
+  38            0x4F,
+  39            0x66,
+  40            0x6D,
+  41            0x7D,
+  42            0x07,
+  43            0x7F,
+  44            0x6F,
+  45          };
+  46          
+  47          void delay(uint i)
+  48          {
+  49   1        int x, y;
+  50   1        for (x = i; x > 0; x--)
+  51   1          for (y = 144; y > 0; y--)
+  52   1            ;
+  53   1      }
+C51 COMPILER V9.60.7.0   MAIN                                                              03/23/2024 19:53:20 PAGE 2   
+
+  54          
+  55          void displayer(ulong z)
+  56          {
+  57   1        int qianwan = z / 10000000;
+  58   1        int baiwan = z % 10000000 / 1000000;
+  59   1        int shiwan = z % 1000000 / 100000;
+  60   1        int wan = z % 100000 / 10000;
+  61   1        int qian = z % 10000 / 1000;
+  62   1        int bai = z % 1000 / 100;
+  63   1        int shi = z % 100 / 10;
+  64   1        int ge = z % 10;
+  65   1      
+  66   1        
+  67   1        
+  68   1          uint nu;
+  69   1      
+  70   1          uint k;
+  71   1      
+  72   1          uint j = 0xfe;
+  73   1      
+  74   1          for (k = 0; k < 8; k++)
+  75   1          {
+  76   2            switch (k)
+  77   2            {
+  78   3            case 0:
+  79   3              nu = qianwan;
+  80   3              break;
+  81   3            case 1:
+  82   3              nu = baiwan;
+  83   3              break;
+  84   3            case 2:
+  85   3              nu = shiwan;
+  86   3              break;
+  87   3            case 3:
+  88   3              nu = wan;
+  89   3              break;
+  90   3            case 4:
+  91   3              nu = qian;
+  92   3              break;
+  93   3            case 5:
+  94   3              nu = bai;
+  95   3              break;
+  96   3            case 6:
+  97   3              nu = shi;
+  98   3              break;
+  99   3            case 7:
+ 100   3              nu = ge;
+ 101   3              break;
+ 102   3            }
+ 103   2      
+ 104   2            P0 = 0xff;
+ 105   2            WE = 1;
+ 106   2            WE = 0;
+ 107   2      
+ 108   2            P0 = dula[nu];
+ 109   2            DU = 1;
+ 110   2            DU = 0;
+ 111   2      
+ 112   2            P0 = j;
+ 113   2            WE = 1;
+ 114   2            WE = 0;
+ 115   2      
+C51 COMPILER V9.60.7.0   MAIN                                                              03/23/2024 19:53:20 PAGE 3   
+
+ 116   2            delay(1);
+ 117   2      
+ 118   2            j = _crol_(j, 1);
+ 119   2          }
+ 120   1        
+ 121   1      }
+ 122          
+ 123          void restoration()//50ms复位函数
+ 124          {
+ 125   1          TH0 = 0X48;
+ 126   1          TL0 = 0XFD;
+ 127   1      }
+ 128          
+ 129          void InterruptInitialization()//中断初始函数
+ 130          {
+ 131   1          EA = 1;
+ 132   1          ET0 = 1; 
+ 133   1          TR0 = 1;
+ 134   1          TMOD = 0X01;//16位定时计数模式
+ 135   1          restoration();
+ 136   1      }
+ 137          
+ 138          
+ 139          
+ 140          void import(uchar x)
+ 141          {
+ 142   1          uint a;
+ 143   1          SCLK = 0;
+ 144   1          for (a = 0; a < 8; a++)
+ 145   1          {
+ 146   2              if (x & 0x01)
+ 147   2                  serial_input = 1;
+ 148   2              else
+ 149   2                  serial_input = 0;
+ 150   2              SCLK = 1;
+ 151   2              SCLK = 0;
+ 152   2              x >>= 1;
+ 153   2          }
+ 154   1      }
+ 155          // 数据写入函数
+ 156          void output()
+ 157          {
+ 158   1          PCLK = 0;
+ 159   1          PCLK = 1;
+ 160   1      }
+ 161          
+ 162          void LatticeScreen()//点阵屏显示函数。
+ 163          {
+ 164   1          uint k;
+ 165   1          
+ 166   1          uchar j ; // 行选初始数据
+ 167   1          j = 0x80;
+ 168   1          for (k = 0; k < 8; k++)
+ 169   1          {
+ 170   2              import(arr[p][k]);
+ 171   2              import(j);
+ 172   2              output();
+ 173   2              j = _cror_(j, 1);
+ 174   2          }
+ 175   1          if(p==3)
+ 176   1          p=0;
+ 177   1      }
+C51 COMPILER V9.60.7.0   MAIN                                                              03/23/2024 19:53:20 PAGE 4   
+
+ 178          
+ 179          void main()
+ 180          {
+ 181   1          InterruptInitialization();
+ 182   1          while(1)
+ 183   1          {
+ 184   2              LatticeScreen();
+ 185   2          }
+ 186   1      }
+ 187          
+ 188          void timer0() interrupt 1
+ 189          {
+ 190   1          static uint m = 0;
+ 191   1          static ulong n = 0;
+ 192   1          restoration();
+ 193   1          m++;
+ 194   1          if (m == 20)
+ 195   1          {
+ 196   2              n++;
+ 197   2              displayer(n);
+ 198   2              m = 0;
+ 199   2              p++;
+ 200   2          }
+ 201   1          
+ 202   1      }
+ 203            
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    788    ----
+   CONSTANT SIZE    =     72    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8      24
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

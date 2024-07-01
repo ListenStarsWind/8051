@@ -1,0 +1,166 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              12/06/2023 19:56:54 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          #define ulong unsigned long
+   5          
+   6          uchar i = 0;
+   7          ulong k = 0;
+   8          uchar  code dula [10]= {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F,};
+   9          
+  10          sbit we = P2^7;
+  11          sbit du = P2^6;
+  12          void delay(uint z)
+  13          {
+  14   1        uint x,y;
+  15   1        for(x = z; x > 0; x--)
+  16   1          for(y = 114; y > 0 ; y--);    
+  17   1      } 
+  18          
+  19          void TimerInitialization()
+  20          {
+  21   1        TR0 = 1;
+  22   1        TMOD = 0x01;
+  23   1        TL0 = 0xfd;
+  24   1        TH0 = 0x4b;
+  25   1      }
+  26          
+  27          void dispiay(ulong i)
+  28          {
+  29   1      uchar qianwan,baiwan,shiwan,wan,qian,bai,shi,ge;
+  30   1      qianwan = i/10000000;
+  31   1      baiwan  = i%10000000/1000000;
+  32   1      shiwan = i%1000000/100000;
+  33   1      wan = i%100000/10000;
+  34   1      qian = i%10000/1000;
+  35   1      bai = i%1000/100;
+  36   1      shi = i%100/10;
+  37   1      ge = i%10;
+  38   1          du = 0;
+  39   1          we = 0;
+  40   1          delay(5);
+  41   1          
+  42   1          P0 = 0XFE;
+  43   1          we = 1;
+  44   1          we = 0;
+  45   1          P0 = dula[qianwan];
+  46   1          du = 1;
+  47   1          du = 0;
+  48   1          delay(5);
+  49   1          
+  50   1          P0  = 0xfd;
+  51   1          we = 1;
+  52   1          we = 0;
+  53   1          P0 = dula[baiwan];
+  54   1          du = 1;
+C51 COMPILER V9.60.7.0   MAIN                                                              12/06/2023 19:56:54 PAGE 2   
+
+  55   1          du = 0;
+  56   1          delay(5);
+  57   1          
+  58   1          P0  = 0xfb;
+  59   1          we = 1;
+  60   1          we = 0;
+  61   1          P0 = dula[shiwan];
+  62   1          du = 1;
+  63   1          du = 0;
+  64   1          delay(5);
+  65   1          
+  66   1          P0  = 0xf7;
+  67   1          we = 1;
+  68   1          we = 0;
+  69   1          P0 = dula[wan];
+  70   1          du = 1;
+  71   1          du = 0;
+  72   1          delay(5);
+  73   1      
+  74   1          P0  = 0xef;
+  75   1          we = 1;
+  76   1          we = 0;
+  77   1          P0 = dula[qian];
+  78   1          du = 1;
+  79   1          du = 0;
+  80   1          delay(5);
+  81   1          
+  82   1          
+  83   1          P0  = 0xdf;
+  84   1          we = 1;
+  85   1          we = 0;
+  86   1          P0 = dula[bai];
+  87   1          du = 1;
+  88   1          du = 0;
+  89   1          delay(5);
+  90   1          
+  91   1          
+  92   1          P0  = 0xbf;
+  93   1          we = 1;
+  94   1          we = 0;
+  95   1          P0 = dula[shi];
+  96   1          du = 1;
+  97   1          du = 0;
+  98   1          delay(5);
+  99   1          
+ 100   1          
+ 101   1          P0  = 0x7f;
+ 102   1          we = 1;
+ 103   1          we = 0;
+ 104   1          P0 = dula[ge];
+ 105   1          du = 1;
+ 106   1          du = 0;
+ 107   1          delay(5);
+ 108   1      }
+ 109          
+ 110          void main()
+ 111          {
+ 112   1        TimerInitialization();
+ 113   1        while (k < 99999999)
+ 114   1        {
+ 115   2          while (i < 20)
+ 116   2          {
+C51 COMPILER V9.60.7.0   MAIN                                                              12/06/2023 19:56:54 PAGE 3   
+
+ 117   3            if (1 == TF0)
+ 118   3            {
+ 119   4              TF0 = 0;
+ 120   4              TL0 = 0xfd;
+ 121   4              TH0 = 0x4b;
+ 122   4              i++;
+ 123   4            }
+ 124   3          }
+ 125   2          if (20 == i)
+ 126   2          {
+ 127   3            k++;
+ 128   3            i = 0;
+ 129   3            dispiay(k);
+ 130   3          }
+ 131   2          //delay(50);
+ 132   2          dispiay(k);
+ 133   2          //delay(50);
+ 134   2          dispiay(k);
+ 135   2          //delay(50);
+ 136   2          dispiay(k);
+ 137   2        }
+ 138   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    536    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,3 @@
+".\Objects\main.obj" 
+TO ".\Objects\数码管静态_复习" 
+PRINT(".\Listings\数码管静态_复习.m51") RAMSIZE(256) 

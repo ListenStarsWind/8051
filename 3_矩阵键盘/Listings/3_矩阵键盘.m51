@@ -1,0 +1,130 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/18/2023  09:38:58  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\»Ìº˛∞≤◊∞\KEIL5\C51\BIN\BL51.EXE .\Objects\3_æÿ’Ûº¸≈Ã.obj TO .\Objects\3_æÿ’Ûº¸≈Ã PRINT (.\Listings\3_æÿ’Ûº¸≈Ã.m51) RA
+>> MSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\3_æÿ’Ûº¸≈Ã.obj (3_________)
+  D:\»Ìº˛∞≤◊∞\KEIL5\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\»Ìº˛∞≤◊∞\KEIL5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\3_æÿ’Ûº¸≈Ã (3_________)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?3_________
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0023H     UNIT         ?PR?MAIN?3_________
+            CODE    00B2H     001EH     UNIT         ?PR?_DELAY?3_________
+            CODE    00D0H     0014H     UNIT         ?CO?3_________
+            CODE    00E4H     0004H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\3_æÿ’Ûº¸≈Ã (3_________)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?3_________
+  +--> ?C_INITSEG
+
+?PR?MAIN?3_________
+  +--> ?PR?_DELAY?3_________
+  +--> ?CO?3_________
+
+
+
+UNRESOLVED EXTERNAL SYMBOLS:
+   KEYVALUE
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\3_æÿ’Ûº¸≈Ã (3_________)
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/18/2023  09:38:58  PAGE 2
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        3_________
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:00B2H         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:008FH         PUBLIC        main
+  C:00D0H         PUBLIC        dula
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:0008H         PUBLIC        key
+  B:00A0H.6       PUBLIC        du
+  B:00A0H.7       PUBLIC        we
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        z
+  -------         DO            
+  D:0006H         SYMBOL        x
+  D:0004H         SYMBOL        y
+  -------         ENDDO         
+  C:00B2H         LINE#         8
+  C:00B2H         LINE#         9
+  C:00B2H         LINE#         11
+  C:00BBH         LINE#         12
+  C:00CFH         LINE#         13
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  C:008FH         LINE#         72
+  C:008FH         LINE#         73
+  C:008FH         LINE#         74
+  C:008FH         LINE#         75
+  C:008FH         LINE#         76
+  C:0091H         LINE#         77
+  C:0093H         LINE#         78
+  C:009AH         LINE#         81
+  C:009DH         LINE#         82
+  C:009FH         LINE#         83
+  C:00A1H         LINE#         85
+  C:00A4H         LINE#         86
+  C:00ACH         LINE#         87
+  C:00AEH         LINE#         88
+  C:00B0H         LINE#         90
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        3_________
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  KEYVALUE
+    MODULE:  .\Objects\3_æÿ’Ûº¸≈Ã.obj (3_________)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/18/2023  09:38:58  PAGE 3
+
+
+    SYMBOL:  KEYVALUE
+    MODULE:  .\Objects\3_æÿ’Ûº¸≈Ã.obj (3_________)
+    ADDRESS: 00A2H
+
+Program Size: data=10.0 xdata=0 code=232
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,110 @@
+C51 COMPILER V9.54   ________                                                              11/17/2023 21:08:39 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE ________
+OBJECT MODULE PLACED IN .\Objects\æÿ’Ûº¸≈Ã.obj
+COMPILER INVOKED BY: D:\»Ìº˛∞≤◊∞\keil5\C51\BIN\C51.EXE æÿ’Ûº¸≈Ã.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Li
+                    -stings\æÿ’Ûº¸≈Ã.lst) TABS(2) OBJECT(.\Objects\æÿ’Ûº¸≈Ã.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #define uint unsigned int
+   3          #define uchar unsigned char
+   4          sbit du = P2^6;
+   5          sbit we = P2^7;
+   6          uchar key = 20;
+   7          uchar code dula[]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F,0x77,0x7C,0x39,0x5E,0x79,0x71,0x76,0x
+             -38,0x40,0x00};
+   8          void delay(uint z)
+   9          {
+  10   1        uint x,y;
+  11   1        for(x = z; x > 0; x--)
+  12   1          for(y = 114; y > 0 ; y--);    
+  13   1      } 
+  14          void KeyValue()
+  15          {
+  16   1            P3 = 0XF0;
+  17   1            if(P3!= 0XF0)
+  18   1            {
+  19   2              delay(20);
+  20   2              if(P3!= 0XF0)
+  21   2              {
+  22   3                  switch(P3)
+  23   3                  {
+  24   4                  case 0XE0:key = 0;break;
+  25   4                  case 0Xd0:key = 1;break;
+  26   4                  case 0Xb0:key = 2;break;
+  27   4                  case 0X70:key = 3;break;
+  28   4                  }
+  29   3              
+  30   3              while = (P3 != 0xF0);
+*** ERROR C141 IN LINE 30 OF æÿ’Ûº¸≈Ã.c: syntax error near '=', expected '('
+  31   3              }
+  32   3              
+  33   3            } 
+  34   2            P3 = 0X0F;
+  35   2            if(P3!= 0X0F)
+  36   2            {
+  37   3              delay(20);
+  38   3              if(P3!= 0X0F)
+  39   3              {
+  40   4                  switch(P3)
+  41   4                  {
+  42   5                  case 0X0e:key = key;break;
+  43   5                  case 0X0d:key = key+4;break;
+  44   5                  case 0X0b:key = key+8;break;
+  45   5                  case 0X07:key = key+12;break;
+  46   5                  }
+  47   4              
+  48   4              while = (P3 != 0x0f);
+*** ERROR C141 IN LINE 48 OF æÿ’Ûº¸≈Ã.c: syntax error near '=', expected '('
+  49   4              }
+  50   4              
+  51   4              P3 = 0XfF;
+C51 COMPILER V9.54   ________                                                              11/17/2023 21:08:39 PAGE 2   
+
+  52   4            if(P3!= 0XfF)
+  53   4            {
+  54   5              delay(20);
+  55   5              if(P3!= 0XfF)
+  56   5              {
+  57   6                  switch(P3)
+  58   6                  {
+  59   7                  case 0Xfe:key = 16;break;
+  60   7                  case 0Xfd:key = 17;break;
+  61   7                  case 0Xfb:key = 18;break;
+  62   7                  case 0Xf7:key = 19;break;
+  63   7                  }
+  64   6              
+  65   6              while = (P3 != 0xfe);
+*** ERROR C141 IN LINE 65 OF æÿ’Ûº¸≈Ã.c: syntax error near '=', expected '('
+  66   6              }
+  67   6              
+  68   6      }
+  69   5      
+  70   5      
+  71   5      
+  72   5      void main()
+*** ERROR C141 IN LINE 72 OF æÿ’Ûº¸≈Ã.c: syntax error near 'void'
+  73   5      {
+  74   6            while(1)
+  75   6        {
+  76   7            du = 0;
+  77   7            we = 0;
+  78   7            delay(5);
+  79   7            
+  80   7            
+  81   7            P0 = 0Xfe;
+  82   7            we = 1;
+  83   7            we = 0;
+  84   7            
+  85   7            KeyValue();
+  86   7            P0 = dula[key];
+  87   7            du = 1;
+  88   7            du = 0;
+  89   7            
+  90   7        }   
+  91   6      }
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  4 ERROR(S)

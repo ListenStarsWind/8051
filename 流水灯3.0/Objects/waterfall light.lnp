@@ -1,0 +1,3 @@
+".\Objects\3-waterfall light.obj" 
+TO ".\Objects\waterfall light" 
+PRINT(".\Listings\waterfall light.m51") RAMSIZE(256) 

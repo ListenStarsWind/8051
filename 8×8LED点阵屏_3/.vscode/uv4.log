@@ -1,0 +1,10 @@
+Build target 'Target 1'
+compiling main.c.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LATTICESCREEN?MAIN_C
+
+Program Size: data=31.0 xdata=0 code=1371
+creating hex file from ".\Objects\8°¡8LEDµ„’Û∆¡_3"...
+".\Objects\8°¡8LEDµ„’Û∆¡_3" - 0 Error(s), 1 Warning(s).
+Build Time Elapsed:  00:00:00

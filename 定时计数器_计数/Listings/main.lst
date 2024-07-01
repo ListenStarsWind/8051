@@ -1,0 +1,208 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              12/11/2023 19:55:32 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /*********************************************************************************
+   2          * 【作    者】： 听风若依
+   3          * 【版    本】： V1.0
+   4          * 【实验平台】： 清翔 QX-MCS51 单片机开发板
+   5          * 【外部晶振】：   11.0592mhz  
+   6          * 【主控芯片】：   STC89C52
+   7          * 【编译环境】：   Keil μVisio5
+   8          * 【编辑环境】：   VS code   
+   9          * 【程序功能】：   计数器0工作模式1，16位计数模式，//定时器1工作模式1，16位�
+             -�时模式。每过0.5秒，通过P1^0口对P3^4施加外部一次脉冲，用数码管显示脉冲次数。                
+             -                  
+  10          * 【使用说明】：   用一根杜邦线把P34引脚对应排针与P10引脚对应的排针链接到一
+             -起
+  11                    P10产生方波 数码管显示方波次数
+  12          **********************************************************************************/
+  13          #include<reg52.h>
+  14          #define uchar unsigned char
+  15          #define uint unsigned int
+  16          #define ulong unsigned long
+  17          
+  18          uchar i = 0;//毫秒储存变量
+  19          
+  20          ulong k = 0;//秒储存变量
+  21          uchar  code dula [10]= {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F,};//共阴极数码管�
+             -��选表
+  22          
+  23          sbit we = P2^7;//数码管位选
+  24          sbit du = P2^6;//数码管段选
+  25          sbit pulse = P1^0;//外部脉冲施加口
+  26          
+  27          /*====================================
+  28          函数  ： delay(uint z)
+  29          参数  ：z 延时毫秒设定，取值范围0-65535
+  30          返回值 ：无
+  31          描述  ：12T/Fosc11.0592M毫秒级延时
+  32          ====================================*/
+  33          void delay(uint z)
+  34          {
+  35   1        uint x,y;
+  36   1        for(x = z; x > 0; x--)
+  37   1          for(y = 114; y > 0 ; y--);    
+  38   1      } 
+  39          
+  40          void CounterInitialization()//计数器0初始化函数
+  41          {
+  42   1        TR0 = 1;     //计数器0启动
+  43   1        TMOD |= 0x05;//计数器0工作模式1,16位计数模式
+  44   1        TL0 = 0x00;
+  45   1        TH0 = 0x00;
+  46   1      }
+  47          
+  48          void TimerInitialization()//定时器1初始化函数
+  49          {
+  50   1        TR1 = 1;   //计数器0启动
+C51 COMPILER V9.60.7.0   MAIN                                                              12/11/2023 19:55:32 PAGE 2   
+
+  51   1        TMOD |= 0X10; //计数器0工作模式1,16位计数模式
+  52   1          TH1 = 0x4b;
+  53   1        TL1 = 0xfd; //定时50ms
+  54   1      }
+  55          
+  56          /*====================================
+  57          函数  ：display(uchar i)
+  58          参数  ：i 显示数值，取值范围0-99999999
+  59          返回值 ：无
+  60          描述  ：三位共阴数码管动态显示
+  61          ====================================*/
+  62          void dispiay(ulong i)
+  63          {
+  64   1      uchar qianwan,baiwan,shiwan,wan,qian,bai,shi,ge;
+  65   1      qianwan = i/10000000;
+  66   1      baiwan  = i%10000000/1000000;
+  67   1      shiwan = i%1000000/100000;
+  68   1      wan = i%100000/10000;
+  69   1      qian = i%10000/1000;
+  70   1      bai = i%1000/100;
+  71   1      shi = i%100/10;
+  72   1      ge = i%10;
+  73   1          du = 0;
+  74   1          we = 0;
+  75   1          delay(5);
+  76   1          
+  77   1          P0 = 0XFE;
+  78   1          we = 1;
+  79   1          we = 0;
+  80   1          P0 = dula[qianwan];
+  81   1          du = 1;
+  82   1          du = 0;
+  83   1          delay(5);
+  84   1          
+  85   1          P0  = 0xfd;
+  86   1          we = 1;
+  87   1          we = 0;
+  88   1          P0 = dula[baiwan];
+  89   1          du = 1;
+  90   1          du = 0;
+  91   1          delay(5);
+  92   1          
+  93   1          P0  = 0xfb;
+  94   1          we = 1;
+  95   1          we = 0;
+  96   1          P0 = dula[shiwan];
+  97   1          du = 1;
+  98   1          du = 0;
+  99   1          delay(5);
+ 100   1          
+ 101   1          P0  = 0xf7;
+ 102   1          we = 1;
+ 103   1          we = 0;
+ 104   1          P0 = dula[wan];
+ 105   1          du = 1;
+ 106   1          du = 0;
+ 107   1          delay(5);
+ 108   1      
+ 109   1          P0  = 0xef;
+ 110   1          we = 1;
+ 111   1          we = 0;
+ 112   1          P0 = dula[qian];
+C51 COMPILER V9.60.7.0   MAIN                                                              12/11/2023 19:55:32 PAGE 3   
+
+ 113   1          du = 1;
+ 114   1          du = 0;
+ 115   1          delay(5);
+ 116   1          
+ 117   1          
+ 118   1          P0  = 0xdf;
+ 119   1          we = 1;
+ 120   1          we = 0;
+ 121   1          P0 = dula[bai];
+ 122   1          du = 1;
+ 123   1          du = 0;
+ 124   1          delay(5);
+ 125   1          
+ 126   1          
+ 127   1          P0  = 0xbf;
+ 128   1          we = 1;
+ 129   1          we = 0;
+ 130   1          P0 = dula[shi];
+ 131   1          du = 1;
+ 132   1          du = 0;
+ 133   1          delay(5);
+ 134   1          
+ 135   1          
+ 136   1          P0  = 0x7f;
+ 137   1          we = 1;
+ 138   1          we = 0;
+ 139   1          P0 = dula[ge];
+ 140   1          du = 1;
+ 141   1          du = 0;
+ 142   1          delay(5);
+ 143   1      }
+ 144          
+ 145          void main()
+ 146          {
+ 147   1          CounterInitialization();//计数器0初始化
+ 148   1        TimerInitialization(); //定时器1初始化
+ 149   1        while (k < 99999999)
+ 150   1        {
+ 151   2          while (i < 20)
+ 152   2          {
+ 153   3            if (1 == TF1)
+ 154   3            {
+ 155   4              TF1 = 0;
+ 156   4              TL1 = 0xfd;
+ 157   4              TH1 = 0x4b;
+ 158   4              i++;
+ 159   4            }
+ 160   3          }
+ 161   2          if (20 == i)
+ 162   2          {
+ 163   3              i = 0;
+ 164   3            pulse = ~pulse;
+ 165   3          }
+ 166   2          dispiay(TL0);
+ 167   2          dispiay(TL0);
+ 168   2          dispiay(TL0);
+ 169   2          dispiay(TL0);
+ 170   2              dispiay(TL0);
+ 171   2          dispiay(TL0);
+ 172   2          
+ 173   2        }
+ 174   1      }
+C51 COMPILER V9.60.7.0   MAIN                                                              12/11/2023 19:55:32 PAGE 4   
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    565    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

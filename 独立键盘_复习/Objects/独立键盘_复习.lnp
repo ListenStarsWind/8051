@@ -1,0 +1,3 @@
+".\Objects\main.obj" 
+TO ".\Objects\¶ÀÁ¢¼üÅÌ_¸´Ï°" 
+PRINT(".\Listings\¶ÀÁ¢¼üÅÌ_¸´Ï°.m51") RAMSIZE(256) 

@@ -1,0 +1,3 @@
+".\Objects\VScode_test.obj" 
+TO ".\Objects\VScode_test" 
+PRINT(".\Listings\VScode_test.m51") RAMSIZE(256) 

@@ -1,0 +1,3 @@
+".\Objects\1-数码管静态.obj" 
+TO ".\Objects\数码管静态" 
+PRINT(".\Listings\数码管静态.m51") RAMSIZE(256) 

@@ -1,0 +1,130 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              04/25/2024 20:19:34 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "stc15f2k60s2.h"
+   2          #include "absacc.h"
+   3          #include <intrins.h>
+   4          #include "12864.c"
+   5          
+   6          /***************
+   7          12864液晶实验
+   8          详见README文件
+   9          ***************/
+  10          
+  11          
+  12          //针对STC15W4K56S4系列IO口初始化
+  13          //io口初始化 P0~7 为准双向IO口   
+  14          void IO_init(void)
+  15          {
+  16   1        P0M0 = 0X00;  P0M1 = 0X00;
+  17   1        P1M0 = 0X00;  P1M1 = 0X00;
+  18   1        P2M0 = 0X00;  P2M1 = 0X00;
+  19   1        P3M0 = 0X00;  P3M1 = 0X00;
+  20   1        P4M0 = 0X00;  P4M1 = 0X00;    
+  21   1        P5M0 = 0X00;  P5M1 = 0X00;    
+  22   1        P6M0 = 0X00;  P6M1 = 0X00;    
+  23   1        P7M0 = 0X00;  P7M1 = 0X00;  
+  24   1      }
+  25          
+  26          void main()
+  27          { 
+  28   1        uchar i;  
+  29   1        IO_init();   //针对STC15W4K56S4 IO口初始化
+  30   1        
+  31   1        //设置STC单片机的P20 P21 22为推挽输出
+  32   1        P2M1 &= ~(1<<2),P2M0 |=  (1<<2); 
+  33   1        P2M1 &= ~(1<<1),P2M0 |=  (1<<1); 
+  34   1        P2M1 &= ~(1<<0),P2M0 |=  (1<<0);  
+  35   1          
+  36   1        initlcd();
+  37   1        for(i=0;i<1;i++)//左移动
+  38   1        {
+  39   2          dis(0,0,"                ");
+  40   2          dis(1,0,"                ");
+  41   2          delayms(800);
+  42   2          dis(0,0,"智能家居模拟控制");
+  43   2          dis(1,0,"AHZYJSXY1");
+  44   2          delayms(8000);
+  45   2          //write_cmd(0x0);
+  46   2          dis(0,0,"能家居模拟控制智");
+  47   2          dis(1,0,"ZYJSXY1       AH");
+  48   2          delayms(8000);
+  49   2          //write_cmd(0x01);
+  50   2          dis(0,0,"家居模拟控制智能");
+  51   2          dis(1,0,"JSXY1       AHZY");
+  52   2          delayms(8000);
+  53   2          //write_cmd(0x01);
+  54   2          dis(0,0,"居模拟控制智能家");
+C51 COMPILER V9.60.7.0   MAIN                                                              04/25/2024 20:19:34 PAGE 2   
+
+  55   2          dis(1,0,"XY1       AHZYJS");
+  56   2          delayms(8000);
+  57   2          //write_cmd(0x01);
+  58   2          dis(0,0,"模拟控制智能家居");
+  59   2          dis(1,0,"1       AHZYJSXY");
+  60   2          delayms(8000);
+  61   2          //write_cmd(0x01);
+  62   2          dis(0,0,"拟控制智能家居模");
+  63   2          dis(1,0,"      AHZYJSXY1 ");
+  64   2          delayms(8000);
+  65   2          //write_cmd(0x01);
+  66   2          dis(0,0,"控制智能家居模拟");
+  67   2          dis(1,0,"    AHZYJSXY1   ");
+  68   2          delayms(8000);
+  69   2          //write_cmd(0x01);
+  70   2          dis(0,0,"制智能家居模拟控");
+  71   2          dis(1,0,"  AHZYJSXY1     ");
+  72   2          delayms(8000);
+  73   2          //write_cmd(0x01);
+  74   2          dis(0,0,"智能家居模拟控制");
+  75   2          dis(1,0,"AHZYJSXY1       ");
+  76   2          delayms(8000);
+  77   2        }
+  78   1        for(i=0;i<1;i++)
+  79   1        {
+  80   2            dis(0,0,"                ");
+  81   2            dis(1,0,"                ");
+  82   2            dis(0,0,"水位：0.00");
+  83   2            dis(1,0,"温湿度：0.00");    
+  84   2            //dis(2,0,"13");    
+  85   2            //dis(3,0,"14");    
+  86   2              
+  87   2            dis(6,0,"水位：0.00");  
+  88   2            dis(7,0,"温湿度：0.00");    
+  89   2            //dis(4,0,"13");  
+  90   2            //dis(5,0,"14");
+  91   2              
+  92   2            write_cmd(0x34);    
+  93   2            write_cmd(0x03);    
+  94   2            gun_shang();    
+  95   2            write_cmd(0x03);  
+  96   2        }
+  97   1        while(1)
+  98   1        {
+  99   2          
+ 100   2        }
+ 101   1      
+ 102   1            
+ 103   1        
+ 104   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    745    ----
+   CONSTANT SIZE    =    323    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

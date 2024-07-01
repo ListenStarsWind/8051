@@ -1,0 +1,3 @@
+".\Objects\main.obj" 
+TO ".\Objects\定时计数器-中断" 
+PRINT(".\Listings\定时计数器-中断.m51") RAMSIZE(256) 
